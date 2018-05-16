@@ -1,7 +1,12 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
 export default () => (
-  <div>
-    <h1>NavBar Component</h1>
+  <div className="navBar">
+    <h3>WikiMaps</h3>
+    <div>
+      <Button color="success">Login</Button>{' '}
+      <Button color="success">Register</Button>{' '}
+    </div>
   </div>
 );

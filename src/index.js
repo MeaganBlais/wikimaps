@@ -6,6 +6,8 @@ import configureStore from './store/store';
 import AppRouter from './routes/AppRouter';
 import { testPrint } from './actions/testAction';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 const store = configureStore();
 
 store.dispatch(testPrint());
