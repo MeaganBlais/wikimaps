@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 // main app
-import App from './components/App';
+import AppRouter from './routes/AppRouter';
 import { testPrint } from './actions/testAction';
 
 const store = configureStore();
@@ -11,7 +11,7 @@ const store = configureStore();
 store.dispatch(testPrint());
 const jsx = (
   <Provider store={store}>
-    <App />
+    <AppRouter/>
   </Provider>
 );
 
