@@ -3,13 +3,10 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (dataHelpers) => {
+module.exports = (knex) => {
 
   router.get("/", (req, res) => {
-    dataHelpers.getAllUsers()
-      .then((results) => {
-        res.json(results);
-    });
+    res.json({greeting: "hello world"});
   });
 
   return router;
