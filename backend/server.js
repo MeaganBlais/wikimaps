@@ -1,4 +1,3 @@
-
 "use strict";
 
 //require('dotenv').config();
@@ -9,15 +8,26 @@ const express     = require("express");
 const app         = express();
 
 const morgan      = require('morgan');
+const knexConfig  = require("./knexfile");
+const knex        = require("knex")(knexConfig[ENV]);
+const knexLogger  = require('knex-logger');
+const dataHelpers = require("./utilities/dataHelpers")(knex);
+
+//Routes File Seperation
+const userRoutes = require("./routes/user");
 
 
-app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
-//app.use(knexLogger(knex));
+app.use(knexLogger(knex));
+app.use(morgan('dev'));
+
+//Routes
+app.use("/user", userRoutes(dataHelpers));
+
 
 
 
 app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+  console.log("WikiMaps is Listening on Port: " + PORT);
 });
