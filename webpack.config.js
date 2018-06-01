@@ -1,7 +1,8 @@
+const path = require('path');
+
 module.exports = {
-  entry: [
-    './src/index.js'
-  ],
+  mode: 'development',
+  entry: './src/index.js',
   output: {
     path: __dirname,
     publicPath: '/',
@@ -15,7 +16,7 @@ module.exports = {
         presets: ['react', 'es2015', 'stage-1']
       }
     },
-    { test: /\.css$/, loader: "style-loader!css-loader" }
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
   resolve: {
