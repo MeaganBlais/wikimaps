@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import axios from 'axios';
 
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
@@ -31,6 +31,8 @@ class NavBar extends React.Component {
 
   register = (e) => {
   e.preventDefault();
+  console.log(process.env);
+  console.log(window.location.origin);
   const registration = {
     firstName: document.getElementById('firstName').value,
     lastName: document.getElementById('lastName').value,
@@ -39,6 +41,11 @@ class NavBar extends React.Component {
     pass: document.getElementById('password').value,
     passConf: document.getElementById('passwordConf').value,
   }
+  axios.post(`http://localhost:3000/user/register`, { registration })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
     console.log(registration);
     console.log("DISPATCH TIME");
     console.log(this.props.dispatch(register(registration)));
