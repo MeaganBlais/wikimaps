@@ -6,7 +6,7 @@ import axios from 'axios';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 
-import { logIn, register } from '../../actions/userActions';
+import { logIn, register, returningUser, logOut } from '../../actions/userActions';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -29,13 +29,18 @@ class NavBar extends React.Component {
     });
   }
 
+  logOut = () => {
+    window.localStorage.removeItem('user')
+    this.props.dispatch(logOut());
+  }
+
   register = (e) => {
   e.preventDefault();
   console.log(process.env);
   console.log(window.location.origin);
   const registration = {
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
+    first_name: document.getElementById('firstName').value,
+    last_name: document.getElementById('lastName').value,
     birthdate: document.getElementById('birthdate').value,
     email: document.getElementById('email').value,
     pass: document.getElementById('password').value,
@@ -44,22 +49,36 @@ class NavBar extends React.Component {
   axios.post(`http://localhost:3000/user/register`, { registration })
     .then(res => {
       console.log(res);
-      console.log(res.data);
+      if (res.data.success == true) {
+        window.localStorage.setItem('user', res.data.user);
+        this.props.dispatch(register(res.data));
+        this.setState({registerModal: false});
+      }
     })
-    console.log(registration);
-    console.log("DISPATCH TIME");
-    console.log(this.props.dispatch(register(registration)));
   }
 
   login = (e) => {
     e.preventDefault();
-    const login = {
+    const loginData = {
       email: document.getElementById('loginEmail').value,
       password: document.getElementById('loginPassword').value,
     }
-    console.log(login);
+    axios.post(`http://localhost:3000/user/login`, { loginData })
+      .then(res => {
+        console.log(res);
+        if (res.data.success == true) {
+          window.localStorage.setItem('user', res.data.user);
+          this.props.dispatch(logIn(res.data));
+          this.setState({loginModal: false});
+        }
+      })
   }
 
+  componentDidMount() {
+    if (window.localStorage.user) {
+      this.props.dispatch(returningUser({user: window.localStorage.user}));
+    }
+  }
 
   render() {
     return (
@@ -67,10 +86,16 @@ class NavBar extends React.Component {
         <LoginModal toggle={this.toggleLoginModal} modal={this.state.loginModal} login={this.login}/>
         <RegisterModal toggle={this.toggleRegisterModal} modal={this.state.registerModal} register={this.register}/>
         <h3>WikiMaps</h3>
+        { !this.props.user.loggedIn ?
         <div>
-          <Button color="success" onClick={this.toggleLoginModal}>Login</Button>{' '}
-          <Button color="success" onClick={this.toggleRegisterModal}>Register</Button>{' '}
+            <Button color="success" onClick={this.toggleLoginModal}>Login</Button>
+            <Button color="success" onClick={this.toggleRegisterModal}>Register</Button>
         </div>
+        :
+        <div>
+            <Button color="success" onClick={this.logOut}>Log Out</Button>
+        </div>
+        }
       </div>
     );
   }
@@ -81,6 +106,5 @@ const mapStateToProps = (state) => {
     user: state.user,
   }
 }
-
 
 export default connect(mapStateToProps)(NavBar);
