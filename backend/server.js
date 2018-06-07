@@ -14,6 +14,8 @@ const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 const dataHelpers = require("./utilities/dataHelpers")(knex);
 
+
+
 //Routes File Seperation
 const userRoutes = require("./routes/user");
 
@@ -38,7 +40,6 @@ app.use(bodyParser.json());
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 app.use(morgan('dev'));
-
 
 
 //Routes

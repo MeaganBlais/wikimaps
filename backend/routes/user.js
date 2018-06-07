@@ -17,12 +17,15 @@ module.exports = (dataHelpers) => {
         delete payload.pass;
         delete payload.passConf;
         dataHelpers.addUser(payload).then( () => {
-          console.log('sucessfull!!!');
+          res.json({ success: true, user: payload.email });
+          res.send;
         })
       });
     }
-    res.json({greeting: "hello world"});
-    res.send;
+  });
+
+  router.get("/login", (req, res) => {
+    console.log('login route has been hit!');
   });
 
   return router;

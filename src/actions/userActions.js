@@ -9,6 +9,20 @@ export const logIn = (params) => {
 export const register = (params) => {
   console.log("REGISTER ACTION HAS BEEN TRIGGERED");
   return {
-    type: 'REGISTER_COMPLETE'
+    type: 'REGISTER_COMPLETE',
+    email: params.user,
+  }
+}
+
+export const returningUser = (params) => {
+  return {
+    type: 'RETURNING_USER',
+    email: params.user,
+  }
+}
+
+export const logOut = (params) => {
+  return {
+    type: 'LOG_OUT',
   }
 }
