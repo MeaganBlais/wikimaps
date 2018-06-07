@@ -1,8 +1,8 @@
 export const logIn = (params) => {
   console.log("IM A FIRING MY LOGIN IN ACTION FOR USER");
   return {
-    type: 'LOGGED_IN'
-
+    type: 'LOG_IN',
+    email: params.user
   }
 }
 

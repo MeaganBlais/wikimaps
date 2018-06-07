@@ -59,16 +59,17 @@ class NavBar extends React.Component {
 
   login = (e) => {
     e.preventDefault();
-    const login = {
+    const loginData = {
       email: document.getElementById('loginEmail').value,
       password: document.getElementById('loginPassword').value,
     }
-    axios.post(`http://localhost:3000/user/login`, { login })
+    axios.post(`http://localhost:3000/user/login`, { loginData })
       .then(res => {
         console.log(res);
         if (res.data.success == true) {
           window.localStorage.setItem('user', res.data.user);
-          this.props.dispatch(register(res.data));
+          this.props.dispatch(logIn(res.data));
+          this.setState({loginModal: false});
         }
       })
   }

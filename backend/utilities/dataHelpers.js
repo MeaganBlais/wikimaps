@@ -12,6 +12,11 @@ module.exports = function makeDataHelpers(knex) {
       return knex
       .insert(user)
       .into('users')
+    },
+
+    getUser(email) {
+      return knex('users')
+      .where('email', email)
     }
   }
 }
