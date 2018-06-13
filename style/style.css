@@ -6,3 +6,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.mapSize {
+  height: 5px;
+  width: 5px;
+}
+
+.red {
+  color:red;
+}
